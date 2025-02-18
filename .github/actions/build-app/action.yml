@@ -23,5 +23,5 @@ runs:
         node-version: ${{ inputs.NODE_VERSION }}
 
     - name: Run build
-      run: npm run build --if-present
+      run: npm i && npm run build --if-present
       shell: bash
