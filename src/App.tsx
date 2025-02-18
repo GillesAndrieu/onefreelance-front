@@ -1,5 +1,5 @@
 import {Route, Routes} from 'react-router-dom';
-import {Secret} from "./pages/auth";
+import {NotFound} from "./pages/auth";
 import {ProtectedRoute} from "./routes";
 import {AuthProvider} from "./hooks";
 
@@ -13,7 +13,7 @@ function App() {
         <AuthProvider>
             <Routes>
                 <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-                <Route path="*" element={<Secret />} />
+                <Route path="*" element={<NotFound />} />
                 <Route path="/login" element={<Login />} />
             </Routes>
         </AuthProvider>
