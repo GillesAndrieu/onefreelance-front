@@ -1,0 +1,27 @@
+# Subworkflows (reusable workflows) must be in the .github/workflows folder
+name: 'Build App'
+description: 'Build the App'
+inputs:
+  GITHUB_TOKEN: # id of input
+    description: 'The github token'
+    required: true
+  NODE_VERSION: # id of input
+    description: 'The node version'
+    required: true
+runs:
+  using: "composite"
+  # Steps represent a sequence of tasks that will be executed as part of the job
+  steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Use Node.js ${{ inputs.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ inputs.NODE_VERSION }}
+
+    - name: Run build
+      run: npm i && npm run build --if-present
+      shell: bash
