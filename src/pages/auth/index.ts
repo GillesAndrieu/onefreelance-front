@@ -1,3 +1,1 @@
-export * from './login';
-
-export * from './NotFound.tsx';
+export * from './Login';

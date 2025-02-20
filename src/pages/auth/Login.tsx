@@ -1,9 +1,17 @@
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+// Google auth
 import {CredentialResponse, GoogleLogin} from "@react-oauth/google";
+// Auth
+import {useAuth} from "../../hooks";
 
-export default function Login() {
+export const Login = () => {
+    const [profile, setProfile] = useState(localStorage.getItem("profile"));
+    const navigate = useNavigate();
+    const { token, setToken } = useAuth();
 
     const responseMessage = (response: CredentialResponse) => {
-        localStorage.setItem("user", JSON.stringify(response));
+        setToken(JSON.stringify(response));
         fetch(`${import.meta.env.VITE_API_URL}/v1/login`, {
             method: 'GET',
             mode: 'cors',
@@ -14,16 +22,23 @@ export default function Login() {
         })
             .then(response => response.json())
             .then(json => {
-                localStorage.setItem("profile", json);
+                localStorage.setItem("profile", JSON.stringify(json))
+                setProfile(json);
                 return json;
             })
             .catch(error => {
-                console.error(error);
+                console.error(error, "profile error");
             });
     };
     const errorMessage = (error: void) => {
         console.log(error);
     };
+
+    useEffect(() => {
+        if(profile && token) {
+            navigate("/", { replace: true });
+        }
+    }, [profile]);
 
     return(
         <>
