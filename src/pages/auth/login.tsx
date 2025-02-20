@@ -3,7 +3,7 @@ import {CredentialResponse, GoogleLogin} from "@react-oauth/google";
 export default function Login() {
 
     const responseMessage = (response: CredentialResponse) => {
-        localStorage.setItem("token", JSON.stringify(response));
+        localStorage.setItem("user", JSON.stringify(response));
         fetch(`${import.meta.env.VITE_API_URL}/v1/login`, {
             method: 'GET',
             mode: 'cors',
