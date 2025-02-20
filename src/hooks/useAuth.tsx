@@ -1,34 +1,37 @@
-import {createContext, useContext, useMemo} from "react";
-import {useNavigate} from "react-router-dom";
-import {useLocalStorage} from "./useLocalStorage";
+import {createContext, useContext, useEffect, useMemo, useState} from "react";
 
 const AuthContext = createContext('light');
 
 export const AuthProvider = ({ children }:{ children: React.ReactNode}) => {
-    const [user, setUser] = useLocalStorage("user", null);
-    const navigate = useNavigate();
+    // State to hold the authentication token
+    const [token, setToken_] = useState(localStorage.getItem("token"));
 
-    // call this function when you want to authenticate the user
-    const login = async (data:any) => {
-        setUser(data);
-        navigate("/profile");
+    // Function to set the authentication token
+    const setToken = (newToken:any) => {
+        setToken_(newToken);
     };
 
-    // call this function to sign out logged in user
-    const logout = () => {
-        setUser(null);
-        navigate("/", { replace: true });
-    };
+    useEffect(() => {
+        if (token) {
+            localStorage.setItem("token", token);
+        } else {
+            localStorage.removeItem("token");
+        }
+    }, [token]);
 
-    const value:any = useMemo(
+    // Memoized value of the authentication context
+    const contextValue:any = useMemo(
         () => ({
-            user,
-            login,
-            logout,
+            token,
+            setToken,
         }),
-        [user]
+        [token]
     );
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+
+    // Provide the authentication context to the children components
+    return (
+        <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    );
 };
 
 export const useAuth:any = () => {
