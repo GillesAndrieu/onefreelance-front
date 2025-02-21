@@ -13,6 +13,7 @@ import {Login} from "../pages/login";
 import {NotFound} from "../pages/not-found";
 import {Home} from "../pages/home";
 import {Suspense} from "react";
+import {varAlpha} from "../theme/styles";
 
 export const Routes = () => {
     const { token } = useAuth();
@@ -31,7 +32,7 @@ export const Routes = () => {
                 sx={{
                     width: 1,
                     maxWidth: 320,
-                    bgcolor: (theme) => varAlpha(theme.palette.text.primaryChannel, 0.16),
+                    bgcolor: (theme) => varAlpha(theme.palette.text.primary, 0.16),
                     [`& .${linearProgressClasses.bar}`]: { bgcolor: 'text.primary' },
                 }}
             />

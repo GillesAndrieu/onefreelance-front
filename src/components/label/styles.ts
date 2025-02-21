@@ -76,7 +76,7 @@ export const StyledLabel = styled(Box)(({
        */
       ...(variant === 'soft' && {
         color: theme.palette[color].dark,
-        backgroundColor: varAlpha(theme.palette[color].mainChannel, 0.16),
+        backgroundColor: varAlpha(theme.palette[color].lighterChannel, 0.16),
         [stylesMode.dark]: { color: theme.palette[color].light },
       }),
       /**
