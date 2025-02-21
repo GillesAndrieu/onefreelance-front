@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import type {Breakpoint} from '@mui/material/styles';
 import {useTheme} from '@mui/material/styles';
 
-import {layoutClasses} from 'src/layouts/classes';
+import {layoutClasses} from '../classes';
 
 // ----------------------------------------------------------------------
 

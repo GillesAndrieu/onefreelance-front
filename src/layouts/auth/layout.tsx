@@ -2,9 +2,9 @@ import type {Breakpoint, SxProps, Theme} from '@mui/material/styles';
 
 import Alert from '@mui/material/Alert';
 
-import {stylesMode} from 'src/theme/styles';
+import {stylesMode} from '../../theme/styles';
 
-import {Logo} from 'src/components/logo';
+import {Logo} from '../../components/logo';
 
 import {Main} from './main';
 import {HeaderSection} from '../core/header-section';

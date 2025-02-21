@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 
 import Box from '@mui/material/Box';
 
-import {bgBlur, varAlpha} from 'src/theme/styles';
+import {bgBlur, varAlpha} from '../../theme/styles';
 
 import {layoutClasses} from '../classes';
 

@@ -12,9 +12,9 @@ import MenuList from '@mui/material/MenuList';
 import Typography from '@mui/material/Typography';
 import MenuItem, {menuItemClasses} from '@mui/material/MenuItem';
 
-import {usePathname, useRouter} from 'src/routes/hooks';
+import {usePathname, useRouter} from '../../routes/hooks';
 
-import {_myAccount} from 'src/_mock';
+import {_myAccount} from '../../_mock';
 
 // ----------------------------------------------------------------------
 

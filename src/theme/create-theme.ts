@@ -1,5 +1,5 @@
 import type {Theme} from '@mui/material/styles';
-import {experimental_extendTheme as extendTheme} from '@mui/material/styles';
+import {extendTheme} from '@mui/material/styles';
 
 import {colorSchemes, components, customShadows, shadows, typography} from './core';
 
@@ -24,7 +24,7 @@ export function createTheme(): Theme {
 
 // ----------------------------------------------------------------------
 
-function shouldSkipGeneratingVar(keys: string[], value: string | number): boolean {
+function shouldSkipGeneratingVar(keys: string[]): boolean {
   const skipGlobalKeys = [
     'mixins',
     'overlays',

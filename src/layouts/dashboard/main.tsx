@@ -5,7 +5,7 @@ import {useTheme} from '@mui/material/styles';
 import type {ContainerProps} from '@mui/material/Container';
 import Container from '@mui/material/Container';
 
-import {layoutClasses} from 'src/layouts/classes';
+import {layoutClasses} from '../classes';
 
 // ----------------------------------------------------------------------
 
