@@ -6,16 +6,15 @@ import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 
-import {_langs, _notifications} from 'src/_mock';
+import {_langs, _notifications} from '../../_mock';
 
-import {Iconify} from 'src/components/iconify';
+import {Iconify} from '../../components/iconify';
 
 import {Main} from './main';
 import {layoutClasses} from '../classes';
 import {NavDesktop, NavMobile} from './nav';
 import {navData} from '../config-nav-dashboard';
 import {Searchbar} from '../components/searchbar';
-import {_workspaces} from '../config-nav-workspace';
 import {MenuButton} from '../components/menu-button';
 import {LayoutSection} from '../core/layout-section';
 import {HeaderSection} from '../core/header-section';
@@ -74,7 +73,6 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
                   data={navData}
                   open={navOpen}
                   onClose={() => setNavOpen(false)}
-                  workspaces={_workspaces}
                 />
               </>
             ),
@@ -111,7 +109,7 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
        * Sidebar
        *************************************** */
       sidebarSection={
-        <NavDesktop data={navData} layoutQuery={layoutQuery} workspaces={_workspaces} />
+        <NavDesktop data={navData} layoutQuery={layoutQuery} />
       }
       /** **************************************
        * Footer

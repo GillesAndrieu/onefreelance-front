@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Drawer, {drawerClasses} from '@mui/material/Drawer';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 
 import {usePathname} from '../../routes/hooks';
 import {RouterLink} from '../../routes/components';
@@ -16,9 +18,7 @@ import {varAlpha} from '../../theme/styles';
 import {Logo} from '../../components/logo';
 import {Scrollbar} from '../../components/scrollbar';
 
-import {NavUpgrade} from '../components/nav-upgrade';
 import type {WorkspacesPopoverProps} from '../components/workspaces-popover';
-import {WorkspacesPopover} from '../components/workspaces-popover';
 
 // ----------------------------------------------------------------------
 
@@ -122,7 +122,13 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
 
       {slots?.topArea}
 
-      <WorkspacesPopover data={workspaces} sx={{ my: 2 }} />
+        <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
+            <Typography
+                variant="overline"
+                sx={{ color: 'text.secondary', fontWeight: 'fontWeightMedium' }}
+            >
+            </Typography>
+        </Divider>
 
       <Scrollbar fillContent>
         <Box component="nav" display="flex" flex="1 1 auto" flexDirection="column" sx={sx}>
@@ -175,7 +181,6 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
 
       {slots?.bottomArea}
 
-      <NavUpgrade />
     </>
   );
 }
