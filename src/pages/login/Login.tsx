@@ -1,17 +1,21 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+// Material ui
+import Box from '@mui/material/Box';
+import Typography from "@mui/material/Typography";
 // Google auth
 import {CredentialResponse, GoogleLogin} from "@react-oauth/google";
 // Auth
 import {useAuth} from "../../hooks";
+import Alert from "@mui/material/Alert";
 
 export const Login = () => {
     const [profile, setProfile] = useState(localStorage.getItem("profile"));
-    const navigate = useNavigate();
+    const [ errorRender, setErrorRender ] = useState(false);
     const { token, setToken } = useAuth();
+    const navigate = useNavigate();
 
     const responseMessage = (response: CredentialResponse) => {
-        console.log(response)
         setToken(JSON.stringify(response));
         fetch(`${import.meta.env.VITE_API_URL}/v1/login`, {
             method: 'GET',
@@ -26,12 +30,14 @@ export const Login = () => {
                 setProfile(json);
                 return json;
             })
-            .catch(error => {
-                console.error(error);
+            .catch(() => {
+                setErrorRender(true);
+                setToken(null);
             });
     };
-    const errorMessage = (error: void) => {
-        console.log(error);
+    const errorMessage = () => {
+        setToken(null);
+        setErrorRender(true);
     };
 
     useEffect(() => {
@@ -42,9 +48,14 @@ export const Login = () => {
     }, [profile]);
 
     return(
-        <>
-        <h2>Login</h2>
-            <GoogleLogin type={"standard"} theme={"outline"} size={"medium"} onSuccess={responseMessage} onError={errorMessage} />
-        </>
+        <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
+            <Typography variant="h5">OneFreelance</Typography>
+            {errorRender &&
+                <Alert severity="error">
+                    You are not authorize to access the website.
+                </Alert>
+            }
+            <GoogleLogin type={"standard"} theme={"filled_blue"} size={"large"} onSuccess={responseMessage} onError={errorMessage} />
+        </Box>
     );
 }
