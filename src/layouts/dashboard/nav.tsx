@@ -113,12 +113,12 @@ export function NavMobile({
 
 // ----------------------------------------------------------------------
 
-export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
+export function NavContent({ data, slots, sx }: NavContentProps) {
   const pathname = usePathname();
 
   return (
     <>
-      <Logo />
+        <Logo />
 
       {slots?.topArea}
 
