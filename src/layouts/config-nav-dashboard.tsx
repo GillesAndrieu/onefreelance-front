@@ -28,6 +28,6 @@ export const navData = [
   {
     title: 'Clients',
     path: '/clients',
-    icon: icon('handshake'),
+    icon: icon('customer-care'),
   }
 ];

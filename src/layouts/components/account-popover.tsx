@@ -13,8 +13,7 @@ import Typography from '@mui/material/Typography';
 import MenuItem, {menuItemClasses} from '@mui/material/MenuItem';
 
 import {usePathname, useRouter} from '../../routes/hooks';
-
-import {_myAccount} from '../../_mock';
+import {ProfileType} from "../../components/types/ProfileType.ts";
 
 // ----------------------------------------------------------------------
 
@@ -28,27 +27,34 @@ export type AccountPopoverProps = IconButtonProps & {
 };
 
 export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps) {
-  const router = useRouter();
+    let profile:ProfileType = {name: "", email: "", picture: "", roles: []};
+    const profileStorage:any = localStorage.getItem("profile")
+    if(profileStorage !== undefined && profileStorage !== "" && profileStorage !== null) {
+        // @ts-ignore
+        profile = JSON.parse(localStorage.getItem("profile"));
+    }
 
-  const pathname = usePathname();
+    const router = useRouter();
 
-  const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+    const pathname = usePathname();
 
-  const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpenPopover(event.currentTarget);
-  }, []);
+    const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
-  const handleClosePopover = useCallback(() => {
-    setOpenPopover(null);
-  }, []);
+    const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+        setOpenPopover(event.currentTarget);
+    }, []);
 
-  const handleClickItem = useCallback(
-    (path: string) => {
-      handleClosePopover();
-      router.push(path);
-    },
-    [handleClosePopover, router]
-  );
+    const handleClosePopover = useCallback(() => {
+        setOpenPopover(null);
+    }, []);
+
+    const handleClickItem = useCallback(
+        (path: string) => {
+            handleClosePopover();
+            router.push(path);
+        },
+        [handleClosePopover, router]
+    );
 
   return (
     <>
@@ -64,8 +70,8 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         }}
         {...other}
       >
-        <Avatar src={_myAccount.photoURL} alt={_myAccount.displayName} sx={{ width: 1, height: 1 }}>
-          {_myAccount.displayName.charAt(0).toUpperCase()}
+        <Avatar src={profile.picture} alt={profile.name} sx={{ width: 1, height: 1 }}>
+          {profile.name.charAt(0).toUpperCase()}
         </Avatar>
       </IconButton>
 
@@ -83,11 +89,11 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
       >
         <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {_myAccount?.displayName}
+            {profile?.name}
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {_myAccount?.email}
+            {profile?.email}
           </Typography>
         </Box>
 

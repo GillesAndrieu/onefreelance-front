@@ -1,16 +1,19 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 // Material ui
 import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
 // Google auth
 import {CredentialResponse, GoogleLogin} from "@react-oauth/google";
 // Auth
 import {useAuth} from "../../hooks";
-import Alert from "@mui/material/Alert";
+// Type
+import {ProfileType} from "../../components/types/ProfileType.ts";
 
 export const Login = () => {
-    const [profile, setProfile] = useState(localStorage.getItem("profile"));
+    const [profile, setProfile] = useState<ProfileType>();
     const [ errorRender, setErrorRender ] = useState(false);
     const { token, setToken } = useAuth();
     const navigate = useNavigate();
@@ -27,7 +30,13 @@ export const Login = () => {
         })
             .then(response => response.json())
             .then(json => {
-                setProfile(json);
+                // @ts-ignore
+                const decodedToken:any = jwtDecode(response.credential);
+                let p:ProfileType = { name: decodedToken.name,
+                        email: decodedToken.email,
+                        picture: decodedToken.picture,
+                        roles: json.roles};
+                setProfile(p);
                 return json;
             })
             .catch(() => {

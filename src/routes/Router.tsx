@@ -5,6 +5,7 @@ import LinearProgress, {linearProgressClasses} from '@mui/material/LinearProgres
 // Auth
 import {useAuth} from "../hooks";
 import {ProtectedRoute} from "./ProtectedRoute";
+import {AuthWrapper} from "../hooks/AuthExpire";
 // Layouts
 import {AuthLayout} from "../layouts/auth";
 import {DashboardLayout} from '../layouts/dashboard';
@@ -44,11 +45,13 @@ export const Routes = () => {
         {
             path: "/",
             element:
-                <DashboardLayout>
-                    <Suspense fallback={renderFallback}>
-                        <ProtectedRoute />
-                    </Suspense>
-                </DashboardLayout>, // Wrap the component in ProtectedRoute
+                <AuthWrapper>
+                    <DashboardLayout>
+                        <Suspense fallback={renderFallback}>
+                            <ProtectedRoute />
+                        </Suspense>
+                    </DashboardLayout>
+                </AuthWrapper>, // Wrap the component in ProtectedRoute
             children: [
                 {
                     path: "",
