@@ -13,6 +13,7 @@ import {DashboardLayout} from '../layouts/dashboard';
 import {Login} from "../pages/login";
 import {NotFound} from "../pages/not-found";
 import {Home} from "../pages/home";
+import {CreateUser, Users} from "../pages/users";
 import {Suspense} from "react";
 import {varAlpha} from "../theme/styles";
 
@@ -60,6 +61,14 @@ export const Routes = () => {
                 {
                     path: "/profile",
                     element: <div>User Profile</div>,
+                },
+                {
+                    path: "/users",
+                    element: <Users />,
+                },
+                {
+                    path: "/users/create",
+                    element: <CreateUser />,
                 }
             ],
         },

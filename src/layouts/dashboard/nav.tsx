@@ -17,6 +17,7 @@ import {varAlpha} from '../../theme/styles';
 
 import {Logo} from '../../components/logo';
 import {Scrollbar} from '../../components/scrollbar';
+import {ProfileType} from "../../components/types/ProfileType.ts";
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +25,7 @@ export type NavContentProps = {
   data: {
     path: string;
     title: string;
+    role: string;
     icon: React.ReactNode;
     info?: React.ReactNode;
   }[];
@@ -110,6 +112,8 @@ export function NavMobile({
 
 export function NavContent({ data, slots, sx }: NavContentProps) {
   const pathname = usePathname();
+  // @ts-ignore
+  const profile:ProfileType = JSON.parse(localStorage.getItem("profile"));
 
   return (
     <>
@@ -131,6 +135,9 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
             {data.map((item) => {
               const isActived = item.path === pathname;
 
+              if(item.role !== undefined && !profile.roles.includes(item.role)) {
+                  return "";
+              }
               return (
                 <ListItem disableGutters disablePadding key={item.title}>
                   <ListItemButton
