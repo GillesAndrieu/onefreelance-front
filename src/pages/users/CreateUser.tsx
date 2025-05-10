@@ -22,6 +22,7 @@ import SendIcon from '@mui/icons-material/Send';
 import {Form} from "react-router-dom";
 import {fetchCreateUser} from "../../components/api";
 import {UserType} from "../../components/types/UserType.ts";
+import Alert from "@mui/material/Alert";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -47,17 +48,24 @@ export function CreateUser() {
     const [lastname, setLastname] = useState();
     const [email, setEmail] = useState();
     const [active, setActive] = useState();
+    const [saveSuccess, setSaveSuccess] = useState(false);
+    const [saveError, setSaveError] = useState(false);
 
     const onSubmit = (values: any) => {
-        console.log(roles)
-        console.log(values)
-        console.log(firstname)
-        console.log(lastname)
-        console.log(email)
-        console.log(active)
-        const user: UserType = UserType.bind(firstname);
+        let user: UserType = {
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            roles: roles,
+            active: active
+        };
+
         fetchCreateUser(user).then(json => {
-            console.log(json)
+            setSaveError(false);
+            setSaveSuccess(true);
+        }).catch(() => {
+            setSaveError(true);
+            setSaveSuccess(false);
         });
     }
 
@@ -87,6 +95,16 @@ export function CreateUser() {
     };
 
     return (<DashboardContent>
+        {saveSuccess &&
+            <Alert severity="success">
+                User created with success
+            </Alert>
+        }
+        {saveError &&
+            <Alert severity="error">
+                Error when created new user.
+            </Alert>
+        }
         <Box display="flex" alignItems="center" mb={5}>
             <Typography variant="h4" flexGrow={1}>
                 Create new User

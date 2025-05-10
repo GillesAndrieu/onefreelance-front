@@ -11,6 +11,8 @@ import MenuItem, {menuItemClasses} from '@mui/material/MenuItem';
 
 import {Iconify} from '../../../components/iconify';
 import {UserType} from "../../../components/types/UserType.ts";
+import {useNavigate} from "react-router-dom";
+import {fetchDeleteUser} from "../../../components/api";
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +24,7 @@ type UserTableRowProps = {
 
 export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+    const navigate = useNavigate();
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
@@ -30,6 +33,21 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
   const handleClosePopover = useCallback(() => {
     setOpenPopover(null);
   }, []);
+
+    const handleUpdate = useCallback(() => {
+        navigate("/users/update?id="+row.id, { replace: true });
+        setOpenPopover(null);
+    }, []);
+
+    const handleDelete = useCallback(() => {
+        fetchDeleteUser(row.id);
+        window.location.reload();
+        setOpenPopover(null);
+    }, []);
+
+  /*const handleUpdate = ((event: React.ChangeEvent<HTMLInputElement>)) {
+
+    }*/
 
   return (
     <>
@@ -90,12 +108,12 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
             },
           }}
         >
-          <MenuItem onClick={handleClosePopover}>
+          <MenuItem onClick={handleUpdate}>
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>
 
-          <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
+          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
             Delete
           </MenuItem>

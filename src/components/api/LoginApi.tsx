@@ -6,9 +6,9 @@ export async function fetchGetProfile(token: CredentialResponse) {
         method: 'GET',
         mode: 'cors',
         headers: {
-            Authorization: `Bearer ${token.credential}`,
-            Accept: 'application/json',
-            ContentType: 'application/json'
+            "Authorization": `Bearer ${token.credential}`,
+            "Accept": 'application/json',
+            "Content-Type": 'application/json'
         }
     });
 }
