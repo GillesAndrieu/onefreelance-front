@@ -1,4 +1,5 @@
 import {forwardRef} from 'react';
+// @ts-ignore
 import SimpleBar from 'simplebar-react';
 
 import Box from '@mui/material/Box';

@@ -10,7 +10,9 @@ import {CredentialResponse, GoogleLogin} from "@react-oauth/google";
 // Auth
 import {useAuth} from "../../hooks";
 // Type
-import {ProfileType} from "../../components/types/ProfileType.ts";
+import {ProfileType} from "../../components/types/ProfileType";
+// Api
+import {fetchGetProfile} from "../../components/api";
 
 export const Login = () => {
     const [profile, setProfile] = useState<ProfileType>();
@@ -20,22 +22,18 @@ export const Login = () => {
 
     const responseMessage = (response: CredentialResponse) => {
         setToken(JSON.stringify(response));
-        fetch(`${import.meta.env.VITE_API_URL}/v1/login`, {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                Authorization: `Bearer ${response.credential}`,
-                Accept: 'application/json'
-            }
-        })
+        fetchGetProfile(response)
             .then(response => response.json())
             .then(json => {
                 // @ts-ignore
                 const decodedToken:any = jwtDecode(response.credential);
-                let p:ProfileType = { name: decodedToken.name,
-                        email: decodedToken.email,
-                        picture: decodedToken.picture,
-                        roles: json.roles};
+                const p:ProfileType = {
+                    id: json.id,
+                    name: decodedToken.name,
+                    email: decodedToken.email,
+                    picture: decodedToken.picture,
+                    roles: json.roles
+                };
                 setProfile(p);
                 return json;
             })
