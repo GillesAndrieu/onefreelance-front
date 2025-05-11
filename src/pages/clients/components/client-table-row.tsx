@@ -10,19 +10,19 @@ import IconButton from '@mui/material/IconButton';
 import MenuItem, {menuItemClasses} from '@mui/material/MenuItem';
 
 import {Iconify} from '../../../components/iconify';
-import {UserType} from "../../../components/types/UserType.ts";
 import {useNavigate} from "react-router-dom";
-import {fetchDeleteUser} from "../../../components/api";
+import {ClientType} from "../../../components/types/ClientType.ts";
+import {fetchDeleteClient} from "../../../components/api/ClientApi.tsx";
 
 // ----------------------------------------------------------------------
 
 type UserTableRowProps = {
-  row: UserType;
+  row: ClientType;
   selected: boolean;
   onSelectRow: () => void;
 };
 
-export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
+export function ClientTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
     const navigate = useNavigate();
 
@@ -35,12 +35,12 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
   }, []);
 
     const handleUpdate = useCallback(() => {
-        navigate("/users/update?id="+row.id, { replace: true });
+        navigate("/clients/update?id="+row.id, { replace: true });
         setOpenPopover(null);
     }, []);
 
     const handleDelete = useCallback(() => {
-        fetchDeleteUser(row.id);
+        fetchDeleteClient(row.id);
         window.location.reload();
         setOpenPopover(null);
     }, []);
@@ -54,21 +54,13 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
-            {row.firstname} {row.lastname}
+            {row.name}
           </Box>
         </TableCell>
 
-        <TableCell>{row.email}</TableCell>
+        <TableCell>{row.siret}</TableCell>
 
-        <TableCell>{row.roles.join(", ")}</TableCell>
-
-        <TableCell>
-          {row.active ? (
-            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
-          ) : (
-            '-'
-          )}
-        </TableCell>
+        <TableCell>{row.referent}</TableCell>
 
         <TableCell align="center">
           {row.create_at}

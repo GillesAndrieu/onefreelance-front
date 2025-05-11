@@ -14,6 +14,7 @@ import {Login} from "../pages/login";
 import {NotFound} from "../pages/not-found";
 import {Home} from "../pages/home";
 import {CreateUser, EditUser, Users} from "../pages/users";
+import {Clients, CreateClient, EditClient} from "../pages/clients";
 import {Suspense} from "react";
 import {varAlpha} from "../theme/styles";
 
@@ -69,11 +70,22 @@ export const Routes = () => {
                 {
                     path: "/users/create",
                     element: <CreateUser />,
-                }
-                ,
+                },
                 {
                     path: "/users/update",
                     element: <EditUser />,
+                },
+                {
+                    path: "/clients",
+                    element: <Clients />,
+                },
+                {
+                    path: "/clients/create",
+                    element: <CreateClient />,
+                },
+                {
+                    path: "/clients/update",
+                    element: <EditClient />,
                 }
             ],
         },
