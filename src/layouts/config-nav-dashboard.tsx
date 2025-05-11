@@ -16,11 +16,6 @@ export const navData = [
     icon: icon('schedule'),
   },
   {
-    title: 'Users',
-    path: '/users',
-    icon: icon('team'),
-  },
-  {
     title: 'Contracts',
     path: '/contracts',
     icon: icon('contract'),
@@ -29,5 +24,11 @@ export const navData = [
     title: 'Clients',
     path: '/clients',
     icon: icon('customer-care'),
+  },
+  {
+    title: 'Users',
+    path: '/users',
+    role: 'ROLE_ADMIN',
+    icon: icon('team'),
   }
 ];

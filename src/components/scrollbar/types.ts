@@ -1,4 +1,5 @@
 import type {SxProps, Theme} from '@mui/material/styles';
+// @ts-ignore
 import type {Props as SimplebarProps} from 'simplebar-react';
 
 // ----------------------------------------------------------------------
