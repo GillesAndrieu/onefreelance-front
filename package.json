@@ -16,7 +16,7 @@
     "@fontsource-variable/dm-sans": "^5.0.7",
     "@fontsource/barlow": "^5.0.14",
     "@fontsource/roboto": "^5.1.1",
-    "@iconify/react": "^5.0.2",
+    "@iconify/react": "^6.0.0",
     "@mui/icons-material": "^6.4.5",
     "@mui/lab": "^5.0.0-alpha.173",
     "@mui/material": "^6.4.5",
