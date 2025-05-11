@@ -45,10 +45,10 @@ export function EditUser() {
     const [searchParams] = useSearchParams();
     const [userId, setUserId] = useState<string>("");
     const [roles, setRoles] = useState<string[]>([]);
-    const [firstname, setFirstname] = useState<string>();
-    const [lastname, setLastname] = useState<string>();
-    const [email, setEmail] = useState<string>();
-    const [active, setActive] = useState<boolean>();
+    const [firstname, setFirstname] = useState<string>("");
+    const [lastname, setLastname] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [active, setActive] = useState<boolean>(false);
     const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
     const [saveError, setSaveError] = useState<boolean>(false);
     const [isLoad, setIsLoad] = useState<boolean>(false);
@@ -67,16 +67,19 @@ export function EditUser() {
             });
     }
 
-    const onSubmit = (values: any) => {
+    const onSubmit = () => {
         let user: UserType = {
             firstname: firstname,
             lastname: lastname,
             email: email,
             roles: roles,
-            active: active
+            active: active,
+            id: userId,
+            create_at: "",
+            update_at: ""
         };
 
-        fetchUpdateUser(user, userId).then(json => {
+        fetchUpdateUser(user, userId).then(() => {
             setSaveError(false);
             setSaveSuccess(true);
         }).catch(() => {
@@ -177,7 +180,7 @@ export function EditUser() {
                                 label="Active"
                             />
                         </Box>
-                        <Button variant="contained" endIcon={<SendIcon />} type="Submit">
+                        <Button variant="contained" endIcon={<SendIcon />} type="submit">
                             Valid
                         </Button>
                     </FormControl>

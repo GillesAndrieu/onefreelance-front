@@ -27,7 +27,7 @@ export type AccountPopoverProps = IconButtonProps & {
 };
 
 export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps) {
-    let profile:ProfileType = {name: "", email: "", picture: "", roles: []};
+    let profile:ProfileType = {id: "", name: "", email: "", picture: "", roles: []};
     const profileStorage:any = localStorage.getItem("profile")
     if(profileStorage !== undefined && profileStorage !== "" && profileStorage !== null) {
         // @ts-ignore

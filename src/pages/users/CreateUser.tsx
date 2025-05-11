@@ -44,23 +44,26 @@ const roleNames = [
 export function CreateUser() {
 
     const [roles, setRoles] = useState<string[]>([]);
-    const [firstname, setFirstname] = useState();
-    const [lastname, setLastname] = useState();
-    const [email, setEmail] = useState();
-    const [active, setActive] = useState();
-    const [saveSuccess, setSaveSuccess] = useState(false);
-    const [saveError, setSaveError] = useState(false);
+    const [firstname, setFirstname] = useState<string>("");
+    const [lastname, setLastname] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [active, setActive] = useState<boolean>(false);
+    const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
+    const [saveError, setSaveError] = useState<boolean>(false);
 
-    const onSubmit = (values: any) => {
+    const onSubmit = () => {
         let user: UserType = {
             firstname: firstname,
             lastname: lastname,
             email: email,
             roles: roles,
-            active: active
+            active: active,
+            id: "",
+            create_at: "",
+            update_at: ""
         };
 
-        fetchCreateUser(user).then(json => {
+        fetchCreateUser(user).then(() => {
             setSaveError(false);
             setSaveSuccess(true);
         }).catch(() => {
@@ -161,7 +164,7 @@ export function CreateUser() {
                         label="Active"
                     />
                 </Box>
-                    <Button variant="contained" endIcon={<SendIcon />} type="Submit">
+                    <Button variant="contained" endIcon={<SendIcon />} type="submit">
                         Valid
                     </Button>
                 </FormControl>
