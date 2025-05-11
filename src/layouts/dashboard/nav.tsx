@@ -23,15 +23,15 @@ import {ProfileType} from "../../components/types/ProfileType.ts";
 
 export type NavContentProps = {
   data: {
-    path: string;
-    title: string;
-    role: string;
-    icon: React.ReactNode;
-    info?: React.ReactNode;
+    path: string,
+    title: string,
+    role: string,
+    icon: React.ReactNode,
+    info?: React.ReactNode
   }[];
   slots?: {
-    topArea?: React.ReactNode;
-    bottomArea?: React.ReactNode;
+    topArea?: React.ReactNode,
+    bottomArea?: React.ReactNode
   };
   sx?: SxProps<Theme>;
 };

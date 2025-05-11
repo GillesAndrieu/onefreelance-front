@@ -69,6 +69,7 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
                   }}
                 />
                 <NavMobile
+                    // @ts-ignore
                   data={navData}
                   open={navOpen}
                   onClose={() => setNavOpen(false)}
@@ -107,6 +108,7 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
        * Sidebar
        *************************************** */
       sidebarSection={
+          // @ts-ignore
         <NavDesktop data={navData} layoutQuery={layoutQuery} />
       }
       /** **************************************

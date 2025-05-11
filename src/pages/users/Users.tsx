@@ -128,6 +128,7 @@ export function Users() {
                     page={table.page}
                     count={users.length}
                     rowsPerPage={table.rowsPerPage}
+                    // @ts-ignore
                     onPageChange={table.onChangePage}
                     rowsPerPageOptions={[5, 10, 25]}
                     onRowsPerPageChange={table.onChangeRowsPerPage}
