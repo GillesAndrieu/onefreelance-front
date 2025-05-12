@@ -100,12 +100,12 @@ export function EditClient() {
     return (<DashboardContent>
         {saveSuccess &&
             <Alert severity="success">
-                User updated with success
+                Client updated with successF
             </Alert>
         }
         {saveError &&
             <Alert severity="error">
-                Error when updated user.
+                Error when updated client.
             </Alert>
         }
         <Box display="flex" alignItems="center" mb={5}>

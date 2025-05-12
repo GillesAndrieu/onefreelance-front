@@ -10,8 +10,8 @@ function isExpired(token:any) {
 
     // @ts-ignore
     if (decodedToken.exp * 1000 < currentDate.getTime()) {
-        localStorage.setItem("profile", "");
         localStorage.setItem("token", "");
+        localStorage.setItem("profile", "");
         return true;
     } else {
         return false;

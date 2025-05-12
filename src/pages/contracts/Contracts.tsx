@@ -15,32 +15,31 @@ import {Iconify} from '../../components/iconify';
 import {Scrollbar} from '../../components/scrollbar';
 
 import {TableNoData} from './components/table-no-data';
-import {ClientTableRow} from './components/client-table-row.tsx';
-import {ClientTableHead} from './components/client-table-head.tsx';
+import {ContractTableRow} from './components/contract-table-row.tsx';
+import {ContractTableHead} from './components/contract-table-head.tsx';
 import {TableEmptyRows} from './components/table-empty-rows';
-import {ClientTableToolbar} from './components/client-table-toolbar.tsx';
+import {ContractTableToolbar} from './components/contract-table-toolbar.tsx';
 import {applyFilter, emptyRows, getComparator} from './components/utils';
-
-import {fetchGetClients} from "../../components/api/ClientApi.tsx";
-import {ClientType} from '../../components/types/ClientType.ts';
+import {ContractType} from "../../components/types/ContractType.ts";
+import {fetchGetContracts} from "../../components/api";
 
 // ----------------------------------------------------------------------
 
-export function Clients() {
-    const [clients, setClients] = useState<ClientType[]>([]);
+export function Contracts() {
+    const [contracts, setContracts] = useState<ContractType[]>([]);
     const table = useTable();
 
     const [filterName, setFilterName] = useState('');
 
 
     useEffect(() => {
-        fetchGetClients().then(json => {
-            setClients(json)
+        fetchGetContracts().then(json => {
+            setContracts(json)
         });
     }, []);
 
-    const dataFiltered: ClientType[] = applyFilter({
-        inputData: clients,
+    const dataFiltered: ContractType[] = applyFilter({
+        inputData: contracts,
         comparator: getComparator(table.order, table.orderBy),
         filterName,
     });
@@ -51,20 +50,20 @@ export function Clients() {
         <DashboardContent>
             <Box display="flex" alignItems="center" mb={5}>
                 <Typography variant="h4" flexGrow={1}>
-                    Clients
+                    Contracts
                 </Typography>
                 <Button
                     variant="contained"
                     color="inherit"
                     startIcon={<Iconify icon="mingcute:add-line" />}
-                    href={"/clients/create"}
+                    href={"/contracts/create"}
                 >
-                    New client
+                    New contract
                 </Button>
             </Box>
 
             <Card>
-                <ClientTableToolbar
+                <ContractTableToolbar
                     numSelected={table.selected.length}
                     filterName={filterName}
                     onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,22 +75,23 @@ export function Clients() {
                 <Scrollbar>
                     <TableContainer sx={{ overflow: 'unset' }}>
                         <Table sx={{ minWidth: 800 }}>
-                            <ClientTableHead
+                            <ContractTableHead
                                 order={table.order}
                                 orderBy={table.orderBy}
-                                rowCount={clients.length}
+                                rowCount={contracts.length}
                                 numSelected={table.selected.length}
                                 onSort={table.onSort}
                                 onSelectAllRows={(checked) =>
                                     table.onSelectAllRows(
                                         checked,
-                                        clients.map((client) => client.id)
+                                        contracts.map((contract) => contract.id)
                                     )
                                 }
                                 headLabel={[
                                     { id: 'name', label: 'Name' },
-                                    { id: 'siret', label: 'Siret' },
-                                    { id: 'referent', label: 'Referent' },
+                                    { id: 'number', label: 'Number' },
+                                    { id: 'dailyRate', label: 'Daily rate' },
+                                    { id: 'taxRate', label: 'Tax rate' },
                                     { id: 'createdAt', label: 'Created At', align: 'center' },
                                     { id: '' },
                                 ]}
@@ -103,7 +103,7 @@ export function Clients() {
                                         table.page * table.rowsPerPage + table.rowsPerPage
                                     )
                                     .map((row) => (
-                                        <ClientTableRow
+                                        <ContractTableRow
                                             key={row.id}
                                             row={row}
                                             selected={table.selected.includes(row.id)}
@@ -113,7 +113,7 @@ export function Clients() {
 
                                 <TableEmptyRows
                                     height={68}
-                                    emptyRows={emptyRows(table.page, table.rowsPerPage, clients.length)}
+                                    emptyRows={emptyRows(table.page, table.rowsPerPage, contracts.length)}
                                 />
 
                                 {notFound && <TableNoData searchQuery={filterName} />}
@@ -125,7 +125,7 @@ export function Clients() {
                 <TablePagination
                     component="div"
                     page={table.page}
-                    count={clients.length}
+                    count={contracts.length}
                     rowsPerPage={table.rowsPerPage}
                     // @ts-ignore
                     onPageChange={table.onChangePage}
