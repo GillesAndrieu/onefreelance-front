@@ -9,13 +9,13 @@ import {Iconify} from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
-type UserTableToolbarProps = {
+type ContractTableToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function ContractTableToolbar({ numSelected, filterName, onFilterName }: UserTableToolbarProps) {
+export function ContractTableToolbar({ numSelected, filterName, onFilterName }: ContractTableToolbarProps) {
   return (
     <Toolbar
       sx={{
@@ -38,7 +38,7 @@ export function ContractTableToolbar({ numSelected, filterName, onFilterName }: 
           fullWidth
           value={filterName}
           onChange={onFilterName}
-          placeholder="Search user..."
+          placeholder="Search contract..."
           startAdornment={
             <InputAdornment position="start">
               <Iconify width={20} icon="eva:search-fill" sx={{ color: 'text.disabled' }} />

@@ -16,6 +16,7 @@ import {Home} from "../pages/home";
 import {CreateUser, EditUser, Users} from "../pages/users";
 import {Clients, CreateClient, EditClient} from "../pages/clients";
 import {Contracts, CreateContract, EditContract} from "../pages/contracts";
+import {CreateReport, EditReport, Reports} from "../pages/reports";
 import {Suspense} from "react";
 import {varAlpha} from "../theme/styles";
 
@@ -99,6 +100,18 @@ export const Routes = () => {
                 {
                     path: "/contracts/update",
                     element: <EditContract />,
+                },
+                {
+                    path: "/activity-report",
+                    element: <Reports />,
+                },
+                {
+                    path: "/activity-report/create",
+                    element: <CreateReport />,
+                },
+                {
+                    path: "/activity-report/update",
+                    element: <EditReport />,
                 }
             ],
         },

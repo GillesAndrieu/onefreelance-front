@@ -16,13 +16,13 @@ import {fetchDeleteClient} from "../../../components/api/ClientApi.tsx";
 
 // ----------------------------------------------------------------------
 
-type UserTableRowProps = {
+type ClientTableRowProps = {
   row: ClientType;
   selected: boolean;
   onSelectRow: () => void;
 };
 
-export function ClientTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
+export function ClientTableRow({ row, selected, onSelectRow }: ClientTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
     const navigate = useNavigate();
 
