@@ -1,6 +1,9 @@
-import {ContractType} from "../../../components/types/ContractType.ts";
+import {ReportType} from "../../../components/types/ReportType.ts";
 
 // ----------------------------------------------------------------------
+export const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 export const visuallyHidden = {
   border: 0,
@@ -53,7 +56,7 @@ export function getComparator<Key extends keyof any>(
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-  inputData: ContractType[];
+  inputData: ReportType[];
   filterName: string;
   comparator: (a: any, b: any) => number;
 };
@@ -71,7 +74,9 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
 
   if (filterName) {
     inputData = inputData.filter(
-      (contract) => contract.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (report) => report.month.toString().toLowerCase().concat("/")
+          .concat(report.year.toString().toLowerCase())
+          .indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

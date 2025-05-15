@@ -13,7 +13,7 @@ import {ClientType} from "../../components/types/ClientType.ts";
 import Alert from "@mui/material/Alert";
 import {AddressType} from "../../components/types/AddressType.ts";
 
-export function EditClient() {
+export function EditReport() {
     const [searchParams] = useSearchParams();
     const [clientId, setClientId] = useState<string>("");
     const [name, setName] = useState<string>("");
@@ -110,7 +110,7 @@ export function EditClient() {
         }
         <Box display="flex" alignItems="center" mb={5}>
             <Typography variant="h4" flexGrow={1}>
-                Edit Client
+                Edit Report
             </Typography>
         </Box>
         {isLoad && <Card sx={{padding:1}}>

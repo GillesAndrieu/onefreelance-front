@@ -11,18 +11,20 @@ import MenuItem, {menuItemClasses} from '@mui/material/MenuItem';
 
 import {Iconify} from '../../../components/iconify';
 import {useNavigate} from "react-router-dom";
-import {ContractType} from "../../../components/types/ContractType.ts";
-import {fetchDeleteContract} from "../../../components/api";
+import getSymbolFromCurrency from 'currency-symbol-map'
+import {ReportType} from "../../../components/types/ReportType.ts";
+import {fetchDeleteReport} from "../../../components/api/ReportApi.tsx";
+import {monthNames} from "./utils.ts";
 
 // ----------------------------------------------------------------------
 
-type ContractTableRowProps = {
-  row: ContractType;
+type ReportTableRowProps = {
+  row: ReportType;
   selected: boolean;
   onSelectRow: () => void;
 };
 
-export function ContractTableRow({ row, selected, onSelectRow }: ContractTableRowProps) {
+export function ReportTableRow({ row, selected, onSelectRow }: ReportTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
     const navigate = useNavigate();
 
@@ -35,12 +37,12 @@ export function ContractTableRow({ row, selected, onSelectRow }: ContractTableRo
   }, []);
 
     const handleUpdate = useCallback(() => {
-        navigate("/contracts/update?id="+row.id, { replace: true });
+        navigate("/activity-report/update?id="+row.id, { replace: true });
         setOpenPopover(null);
     }, []);
 
     const handleDelete = useCallback(() => {
-        fetchDeleteContract(row.id);
+        fetchDeleteReport(row.id);
         window.location.reload();
         setOpenPopover(null);
     }, []);
@@ -54,15 +56,20 @@ export function ContractTableRow({ row, selected, onSelectRow }: ContractTableRo
 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
-            {row.name}
+              {monthNames[row.month]} {row.year}
           </Box>
         </TableCell>
 
-        <TableCell>{row.number}</TableCell>
+        <TableCell>{monthNames[row.billed_month]} {row.billed_year}</TableCell>
 
-        <TableCell>{row.daily_rate} {row.currency_daily_rate}</TableCell>
+        <TableCell>
+            {row.billed ? (
+                <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
+            ) : (
+                '-'
+            )}</TableCell>
 
-        <TableCell>{row.tax_rate} {(row.tax_rate_type === 'CURRENCY')?row.currency_daily_rate:"%"}</TableCell>
+        <TableCell>{row.calculated.total_tax_included} {getSymbolFromCurrency("GBP")}</TableCell>
 
         <TableCell align="center">
           {row.create_at}
