@@ -18,7 +18,7 @@ import {useState} from "react";
 import SendIcon from '@mui/icons-material/Send';
 import {Form} from "react-router-dom";
 import Alert from "@mui/material/Alert";
-import {ReportType} from "../../components/types/ReportType.ts";
+import {ReportInputType} from "../../components/types/ReportInputType.ts";
 import {fetchCreateReport} from "../../components/api";
 import Checkbox from "@mui/material/Checkbox";
 import {monthNames} from "./components/utils.ts";
@@ -32,8 +32,8 @@ export function CreateReport() {
     const [month, setMonth] = useState<number>(nowMonth);
     const [year, setYear] = useState<number>(nowYear);
 
-    const [billedMonth, setBilledMonth] = useState<number>(0);
-    const [billedYear, setBilledYear] = useState<number>(0);
+    const [billedMonth, setBilledMonth] = useState<number>(nowMonth);
+    const [billedYear, setBilledYear] = useState<number>(nowYear);
     const [billed, setBilled] = useState<boolean>(false);
     const [bonus, setBonus] = useState<number>(0);
     const [activity, setActivity] = useState<Map<string, number>>(new Map<string, number>());
@@ -41,22 +41,25 @@ export function CreateReport() {
     const [saveError, setSaveError] = useState<boolean>(false);
 
     const onSubmit = () => {
-        let report: ReportType = {
+        let report: ReportInputType = {
             month: month,
             year: year,
-            billed_month: (billedMonth === 0)?null:billedMonth,
-            billed_year: (billedYear === 0)?null:billedYear,
+            billed_month: billedMonth,
+            billed_year: billedYear,
             billed: billed,
             bonus: bonus,
             activity: Object.fromEntries(activity),
             contract_id: "d6af7e0b-21b0-4d6f-8e24-bdbfd00ef550",
             client_id: "0d96b193-6136-4693-9779-d78f21a0030d",
+            id: "",
+            create_at: "",
+            update_at: ""
         };
-console.log(report)
-console.log(JSON.stringify(report))
+
         fetchCreateReport(report).then(() => {
             setSaveError(false);
             setSaveSuccess(true);
+            window.location.replace("/activity-report");
         }).catch(() => {
             setSaveError(true);
             setSaveSuccess(false);
@@ -88,6 +91,12 @@ console.log(JSON.stringify(report))
     const handleBonus = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBonus(event.target.valueAsNumber);
     };
+
+    const handleActivity = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // @ts-ignore
+        let newActivity:Map<string,number> = activity.set(event.target.id, (event.target.value as number))
+        setActivity(newActivity);
+    }
 
     return (<DashboardContent>
         {saveSuccess &&
@@ -168,7 +177,7 @@ console.log(JSON.stringify(report))
                         />
                     </Box>
                     {month !== 0 && year !== 0 && year > 1900 &&
-                        <FormCalendar year={year} month={month} activity={activity} setActivity={setActivity} />
+                        <FormCalendar year={year} month={month} activity={activity} setActivity={setActivity} handleActivity={handleActivity} />
                     }
                     <Button variant="contained" endIcon={<SendIcon />} type="submit">
                         Valid

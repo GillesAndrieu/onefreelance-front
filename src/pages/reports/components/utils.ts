@@ -1,6 +1,7 @@
 import {ReportType} from "../../../components/types/ReportType.ts";
 
 // ----------------------------------------------------------------------
+export const weekDaysNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 export const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];

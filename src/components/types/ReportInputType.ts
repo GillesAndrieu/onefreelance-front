@@ -1,6 +1,5 @@
-import {CalculatedType} from "./CalculatedType.ts";
 
-export interface ReportType {
+export interface ReportInputType {
     id: string,
     client_id: string,
     contract_id: string,
@@ -11,7 +10,6 @@ export interface ReportType {
     billed: boolean,
     activity: any,
     bonus: number,
-    calculated: CalculatedType,
     create_at: string,
     update_at: string
 }

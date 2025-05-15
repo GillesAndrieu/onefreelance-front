@@ -1,4 +1,5 @@
 import {ReportType} from "../types/ReportType.ts";
+import {ReportInputType} from "../types/ReportInputType.ts";
 
 export async function fetchGetReports():Promise<ReportType[]> {
     const localToken:any = localStorage.getItem("token");
@@ -28,7 +29,7 @@ export async function fetchGetReport(id: string):Promise<ReportType> {
     }).then(response => response.json());
 }
 
-export async function fetchCreateReport(report: ReportType):Promise<ReportType> {
+export async function fetchCreateReport(report: ReportInputType):Promise<ReportType> {
     const localToken:any = localStorage.getItem("token");
     const token:any = JSON.parse(localToken);
     return await fetch(`${import.meta.env.VITE_API_URL}/v1/report`, {
