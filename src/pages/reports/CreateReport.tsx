@@ -177,7 +177,7 @@ export function CreateReport() {
                         />
                     </Box>
                     {month !== 0 && year !== 0 && year > 1900 &&
-                        <FormCalendar year={year} month={month} activity={activity} setActivity={setActivity} handleActivity={handleActivity} />
+                        <FormCalendar year={year} month={month} activity={activity} handleActivity={handleActivity} />
                     }
                     <Button variant="contained" endIcon={<SendIcon />} type="submit">
                         Valid

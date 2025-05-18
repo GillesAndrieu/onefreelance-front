@@ -3,114 +3,127 @@ import {DashboardContent} from "../../layouts/dashboard";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import {CardContent, FormControl, TextField} from "@mui/material";
+import {
+    CardContent,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+    TextField
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useState} from "react";
 import SendIcon from '@mui/icons-material/Send';
 import {Form, useSearchParams} from "react-router-dom";
-import {fetchGetClient, fetchUpdateClient} from "../../components/api";
-import {ClientType} from "../../components/types/ClientType.ts";
 import Alert from "@mui/material/Alert";
-import {AddressType} from "../../components/types/AddressType.ts";
+import {ReportInputType} from "../../components/types/ReportInputType.ts";
+import {fetchGetReport, fetchUpdateReport} from "../../components/api";
+import Checkbox from "@mui/material/Checkbox";
+import {monthNames} from "./components/utils.ts";
+import {FormEditCalendar} from "./FormEditCalendar.tsx";
 
 export function EditReport() {
+
+    const nowMonth: number = new Date().getMonth()+1;
+    const nowYear: number = new Date().getFullYear();
+
     const [searchParams] = useSearchParams();
-    const [clientId, setClientId] = useState<string>("");
-    const [name, setName] = useState<string>("");
-    const [siret, setSiret] = useState<string>("");
-    const [referent, setReferent] = useState<string>("");
-    const [number, setNumber] = useState<string>("");
-    const [street, setStreet] = useState<string>("");
-    const [city, setCity] = useState<string>("");
-    const [postalCode, setPostalCode] = useState<string>("");
+    const [reportId, setReportId] = useState<string>("");
+
+    const [month, setMonth] = useState<number>(nowMonth);
+    const [year, setYear] = useState<number>(nowYear);
+
+    const [billedMonth, setBilledMonth] = useState<number>(nowMonth);
+    const [billedYear, setBilledYear] = useState<number>(nowYear);
+    const [billed, setBilled] = useState<boolean>(false);
+    const [bonus, setBonus] = useState<number>(0);
+    const [activity, setActivity] = useState<Map<string, number>>(new Map<string, number>());
     const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
     const [saveError, setSaveError] = useState<boolean>(false);
     const [isLoad, setIsLoad] = useState<boolean>(false);
     const id:any = searchParams.get("id");
 
     if(!isLoad) {
-        fetchGetClient(id)
+        fetchGetReport(id)
             .then(response => {
-                setClientId(response.id)
-                setName(response.name);
-                setSiret(response.siret);
-                setReferent(response.referent);
-                setNumber(response.address.number);
-                setStreet(response.address.street);
-                setCity(response.address.city);
-                setPostalCode(response.address.postal_code);
+                let activityFormated:Map<string, number> = new Map(Object.entries(response.activity));
+                setReportId(response.id);
+                setMonth(response.month);
+                setYear(response.year);
+                setBilledMonth(response.billed_month);
+                setBilledYear(response.billed_year);
+                setBonus(response.bonus);
+                setBilled(response.billed);
+                setActivity(activityFormated);
                 setIsLoad(true);
             });
+
     }
 
     const onSubmit = () => {
-        let address: AddressType = {
-            number: number,
-            street: street,
-            city: city,
-            postal_code: postalCode,
-        }
-        let client: ClientType = {
-            name: name,
-            siret: siret,
-            referent: referent,
-            address: address,
-            id: clientId,
+        let report: ReportInputType = {
+            month: month,
+            year: year,
+            billed_month: billedMonth,
+            billed_year: billedYear,
+            billed: billed,
+            bonus: bonus,
+            activity: Object.fromEntries(activity),
+            contract_id: "d6af7e0b-21b0-4d6f-8e24-bdbfd00ef550",
+            client_id: "0d96b193-6136-4693-9779-d78f21a0030d",
+            id: "",
             create_at: "",
             update_at: ""
         };
 
-        fetchUpdateClient(client, clientId).then(() => {
+        fetchUpdateReport(report, reportId).then(() => {
             setSaveError(false);
             setSaveSuccess(true);
+            window.location.replace("/activity-report");
         }).catch(() => {
             setSaveError(true);
             setSaveSuccess(false);
         });
     }
 
-    const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value);
+    const handleBilledMonth = (event: SelectChangeEvent<number>) => {
+        setBilledMonth((event.target.value as number));
     };
 
-    const handleSiret = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSiret(event.target.value);
+    const handleBilledYear = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBilledYear(event.target.valueAsNumber);
     };
 
-    const handleReferent = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setReferent(event.target.value);
+    const handleBilled = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBilled(event.target.checked);
     };
 
-    const handleNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNumber(event.target.value);
+    const handleBonus = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBonus(event.target.valueAsNumber);
     };
 
-    const handleStreet = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setStreet(event.target.value);
-    };
-
-    const handleCity = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCity(event.target.value);
-    };
-
-    const handlePostalCode = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPostalCode(event.target.value);
-    };
+    const handleActivity = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // @ts-ignore
+        let newActivity:Map<string,number> = activity.set(event.target.id, (event.target.value as number))
+        setActivity(newActivity);
+    }
 
     return (<DashboardContent>
         {saveSuccess &&
             <Alert severity="success">
-                Client updated with successF
+                Report updated with success
             </Alert>
         }
         {saveError &&
             <Alert severity="error">
-                Error when updated client.
+                Error when updated new report.
             </Alert>
         }
         <Box display="flex" alignItems="center" mb={5}>
             <Typography variant="h4" flexGrow={1}>
-                Edit Report
+                Update Report
             </Typography>
         </Box>
         {isLoad && <Card sx={{padding:1}}>
@@ -119,35 +132,64 @@ export function EditReport() {
                     <FormControl component="fieldset" variant="standard" fullWidth >
                         <Box display="flex" alignItems="center" mb={1}>
                             <Typography variant="h6" flexGrow={1}>
-                                Client
+                                Report
                             </Typography>
                         </Box>
+                        <FormControl required fullWidth >
+                            <Box display="flex" alignItems="center" mb={1}>
+                                <InputLabel id="month-label">Month</InputLabel>
+                                <Select
+                                    labelId="month-label"
+                                    id="outlined-basic"
+                                    value={month}
+                                    label="Month"
+                                    variant="outlined"
+                                    fullWidth disabled={true}
+                                >
+                                    {monthNames.map((m, i) => (
+                                        <MenuItem value={i+1} key={i+"month"}>{m}</MenuItem>
+                                    ))}
+                                </Select>
+                            </Box>
+                        </FormControl>
                         <Box display="flex" alignItems="center" mb={1}>
-                            <TextField id="outlined-basic" value={name} onChange={handleName} label="Name" variant="outlined" fullWidth required />
+                            <TextField id="outlined-number" value={year} type="number" label="Year" variant="outlined" fullWidth disabled={true} />
+                        </Box>
+                        <FormControl required fullWidth >
+                            <Box display="flex" alignItems="center" mb={1}>
+                                <InputLabel id="billed-month-label">Billed Month</InputLabel>
+                                <Select
+                                    labelId="billed-month-label"
+                                    id="outlined-basic"
+                                    value={billedMonth}
+                                    label="Billed Month"
+                                    onChange={handleBilledMonth}
+                                    variant="outlined"
+                                    fullWidth required
+                                >
+                                    {monthNames.map((m, i) => (
+                                        <MenuItem value={i+1} key={i+"billedMonth"}>{m}</MenuItem>
+                                    ))}
+                                </Select>
+                            </Box>
+                        </FormControl>
+                        <Box display="flex" alignItems="center" mb={1}>
+                            <TextField id="outlined-number" value={billedYear} onChange={handleBilledYear} type="number" label="Billed Year" variant="outlined" fullWidth required />
                         </Box>
                         <Box display="flex" alignItems="center" mb={1}>
-                            <TextField id="outlined-basic" value={siret} onChange={handleSiret} label="Siret" variant="outlined" fullWidth required />
+                            <TextField id="outlined-number" value={bonus} onChange={handleBonus} type="number" label="Bonus" variant="outlined" fullWidth required />
                         </Box>
-                        <Box display="flex" alignItems="center" mb={1}>
-                            <TextField id="outlined-basic" value={referent} onChange={handleReferent} label="Referent" variant="outlined" fullWidth required />
+                        <Box>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox name="billed" value={billed} onChange={handleBilled} checked={billed} />
+                                }
+                                label="Billed"
+                            />
                         </Box>
-                        <Box display="flex" alignItems="center" mb={1}>
-                            <Typography variant="h6" flexGrow={1}>
-                                Address
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center" mb={1}>
-                            <TextField id="outlined-basic" value={number} onChange={handleNumber} label="Number" variant="outlined" fullWidth required />
-                        </Box>
-                        <Box display="flex" alignItems="center" mb={1}>
-                            <TextField id="outlined-basic" value={street} onChange={handleStreet} label="Street" variant="outlined" fullWidth required />
-                        </Box>
-                        <Box display="flex" alignItems="center" mb={1}>
-                            <TextField id="outlined-basic" value={city} onChange={handleCity} label="City" variant="outlined" fullWidth required />
-                        </Box>
-                        <Box display="flex" alignItems="center" mb={1}>
-                            <TextField id="outlined-basic" value={postalCode} onChange={handlePostalCode} label="Postal code" variant="outlined" fullWidth required />
-                        </Box>
+                        {month !== 0 && year !== 0 && year > 1900 &&
+                            <FormEditCalendar year={year} month={month} activity={activity} handleActivity={handleActivity} />
+                        }
                         <Button variant="contained" endIcon={<SendIcon />} type="submit">
                             Valid
                         </Button>

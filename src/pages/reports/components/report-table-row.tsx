@@ -56,11 +56,11 @@ export function ReportTableRow({ row, selected, onSelectRow }: ReportTableRowPro
 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
-              {monthNames[row.month]} {row.year}
+              {monthNames[row.month-1]} {row.year}
           </Box>
         </TableCell>
 
-        <TableCell>{monthNames[row.billed_month]} {row.billed_year}</TableCell>
+        <TableCell>{monthNames[row.billed_month-1]} {row.billed_year}</TableCell>
 
         <TableCell>
             {row.billed ? (

@@ -44,7 +44,7 @@ export async function fetchCreateReport(report: ReportInputType):Promise<ReportT
     }).then(response => response.json());
 }
 
-export async function fetchUpdateReport(report: ReportType, id: string):Promise<ReportType> {
+export async function fetchUpdateReport(report: ReportInputType, id: string):Promise<ReportType> {
     const localToken:any = localStorage.getItem("token");
     const token:any = JSON.parse(localToken);
     return await fetch(`${import.meta.env.VITE_API_URL}/v1/report/${id}`, {
