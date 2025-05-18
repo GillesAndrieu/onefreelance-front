@@ -35,6 +35,7 @@ export function CreateContract() {
                 setIsLoad(true);
             });
     }
+
     const onSubmit = () => {
 
         let contract: ContractType = {

@@ -1,7 +1,6 @@
 
 export interface ReportInputType {
     id: string,
-    client_id: string,
     contract_id: string,
     month: number,
     year: number,

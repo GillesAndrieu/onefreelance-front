@@ -19,7 +19,7 @@ import SendIcon from '@mui/icons-material/Send';
 import {Form, useSearchParams} from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import {ReportInputType} from "../../components/types/ReportInputType.ts";
-import {fetchGetReport, fetchUpdateReport} from "../../components/api";
+import {fetchGetContracts, fetchGetReport, fetchUpdateReport} from "../../components/api";
 import Checkbox from "@mui/material/Checkbox";
 import {monthNames} from "./components/utils.ts";
 import {FormEditCalendar} from "./FormEditCalendar.tsx";
@@ -40,16 +40,26 @@ export function EditReport() {
     const [billed, setBilled] = useState<boolean>(false);
     const [bonus, setBonus] = useState<number>(0);
     const [activity, setActivity] = useState<Map<string, number>>(new Map<string, number>());
+    const [contracts, setContracts] = useState<Map<string, string>>(new Map<string, string>());
+    const [contractId, setContractId] = useState<string>("");
     const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
     const [saveError, setSaveError] = useState<boolean>(false);
     const [isLoad, setIsLoad] = useState<boolean>(false);
     const id:any = searchParams.get("id");
 
     if(!isLoad) {
+        fetchGetContracts()
+            .then(response => {
+                let initContracts: Map<string, string> = new Map<string, string>();
+                response.map((contract) => initContracts.set(contract.id, contract.name));
+                setContracts(initContracts);
+            });
+
         fetchGetReport(id)
             .then(response => {
                 let activityFormated:Map<string, number> = new Map(Object.entries(response.activity));
                 setReportId(response.id);
+                setContractId(response.contract_id)
                 setMonth(response.month);
                 setYear(response.year);
                 setBilledMonth(response.billed_month);
@@ -71,8 +81,7 @@ export function EditReport() {
             billed: billed,
             bonus: bonus,
             activity: Object.fromEntries(activity),
-            contract_id: "d6af7e0b-21b0-4d6f-8e24-bdbfd00ef550",
-            client_id: "0d96b193-6136-4693-9779-d78f21a0030d",
+            contract_id: contractId,
             id: "",
             create_at: "",
             update_at: ""
@@ -81,12 +90,15 @@ export function EditReport() {
         fetchUpdateReport(report, reportId).then(() => {
             setSaveError(false);
             setSaveSuccess(true);
-            window.location.replace("/activity-report");
         }).catch(() => {
             setSaveError(true);
             setSaveSuccess(false);
         });
     }
+
+    const handleContractId = (event: SelectChangeEvent<string>) => {
+        setContractId(event.target.value);
+    };
 
     const handleBilledMonth = (event: SelectChangeEvent<number>) => {
         setBilledMonth((event.target.value as number));
@@ -135,6 +147,25 @@ export function EditReport() {
                                 Report
                             </Typography>
                         </Box>
+                        <FormControl required fullWidth >
+                            <Box display="flex" alignItems="center" mb={1}>
+                                <InputLabel id="contract-label">Contract</InputLabel>
+                                <Select
+                                    labelId="contract-label"
+                                    id="outlined-basic"
+                                    value={contractId}
+                                    label="Contract"
+                                    onChange={handleContractId}
+                                    variant="outlined"
+                                    fullWidth required
+                                >
+                                    <MenuItem value={0} key={0}>&nbsp;</MenuItem>
+                                    {[...contracts.entries()].map(([key, value]) =>
+                                        <MenuItem value={key} key={key}>{value}</MenuItem>
+                                    )}
+                                </Select>
+                            </Box>
+                        </FormControl>
                         <FormControl required fullWidth >
                             <Box display="flex" alignItems="center" mb={1}>
                                 <InputLabel id="month-label">Month</InputLabel>

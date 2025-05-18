@@ -19,7 +19,7 @@ import SendIcon from '@mui/icons-material/Send';
 import {Form} from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import {ReportInputType} from "../../components/types/ReportInputType.ts";
-import {fetchCreateReport} from "../../components/api";
+import {fetchCreateReport, fetchGetContracts} from "../../components/api";
 import Checkbox from "@mui/material/Checkbox";
 import {monthNames} from "./components/utils.ts";
 import {FormCalendar} from "./FormCalendar.tsx";
@@ -37,8 +37,21 @@ export function CreateReport() {
     const [billed, setBilled] = useState<boolean>(false);
     const [bonus, setBonus] = useState<number>(0);
     const [activity, setActivity] = useState<Map<string, number>>(new Map<string, number>());
+    const [contracts, setContracts] = useState<Map<string, string>>(new Map<string, string>());
+    const [contractId, setContractId] = useState<string>("");
+    const [isLoad, setIsLoad] = useState<boolean>(false);
     const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
     const [saveError, setSaveError] = useState<boolean>(false);
+
+    if(!isLoad) {
+        fetchGetContracts()
+            .then(response => {
+                let initContracts: Map<string, string> = new Map<string, string>();
+                response.map((contract) => initContracts.set(contract.id, contract.name));
+                setContracts(initContracts);
+                setIsLoad(true);
+            });
+    }
 
     const onSubmit = () => {
         let report: ReportInputType = {
@@ -49,8 +62,7 @@ export function CreateReport() {
             billed: billed,
             bonus: bonus,
             activity: Object.fromEntries(activity),
-            contract_id: "d6af7e0b-21b0-4d6f-8e24-bdbfd00ef550",
-            client_id: "0d96b193-6136-4693-9779-d78f21a0030d",
+            contract_id: contractId,
             id: "",
             create_at: "",
             update_at: ""
@@ -65,6 +77,10 @@ export function CreateReport() {
             setSaveSuccess(false);
         });
     }
+
+    const handleContractId = (event: SelectChangeEvent<string>) => {
+        setContractId(event.target.value);
+    };
 
     const handleMonth = (event: SelectChangeEvent<number>) => {
         setMonth((event.target.value as number));
@@ -123,6 +139,25 @@ export function CreateReport() {
                             Report
                         </Typography>
                     </Box>
+                    <FormControl required fullWidth >
+                        <Box display="flex" alignItems="center" mb={1}>
+                            <InputLabel id="contract-label">Contract</InputLabel>
+                            <Select
+                                labelId="contract-label"
+                                id="outlined-basic"
+                                value={contractId}
+                                label="Contract"
+                                onChange={handleContractId}
+                                variant="outlined"
+                                fullWidth required
+                            >
+                                <MenuItem value={0} key={0}>&nbsp;</MenuItem>
+                                {[...contracts.entries()].map(([key, value]) =>
+                                    <MenuItem value={key} key={key}>{value}</MenuItem>
+                                )}
+                            </Select>
+                        </Box>
+                    </FormControl>
                     <FormControl required fullWidth >
                     <Box display="flex" alignItems="center" mb={1}>
                         <InputLabel id="month-label">Month</InputLabel>

@@ -34,7 +34,6 @@ export function EditContract() {
                 let initClients: Map<string, string> = new Map<string, string>();
                 response.map((client) => initClients.set(client.id, client.name));
                 setClients(initClients);
-                setIsLoad(true);
             });
 
         fetchGetContract(id)
