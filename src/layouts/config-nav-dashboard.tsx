@@ -30,5 +30,17 @@ export const navData = [
     path: '/users',
     role: 'ROLE_ADMIN',
     icon: icon('team'),
+  },
+  {
+    title: 'Notifications Settings',
+    path: '/notifications-settings',
+    role: 'ROLE_ADMIN',
+    icon: icon('notification'),
+  },
+  {
+    title: 'Settings',
+    path: '/settings',
+    role: 'ROLE_ADMIN',
+    icon: icon('cogs'),
   }
 ];

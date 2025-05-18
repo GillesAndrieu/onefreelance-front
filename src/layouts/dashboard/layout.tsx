@@ -6,20 +6,16 @@ import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 
-import {_notifications} from '../../_mock';
-
 import {Iconify} from '../../components/iconify';
 
 import {Main} from './main';
 import {layoutClasses} from '../classes';
 import {NavDesktop, NavMobile} from './nav';
 import {navData} from '../config-nav-dashboard';
-import {Searchbar} from '../components/searchbar';
 import {MenuButton} from '../components/menu-button';
 import {LayoutSection} from '../core/layout-section';
 import {HeaderSection} from '../core/header-section';
 import {AccountPopover} from '../components/account-popover';
-import {NotificationsPopover} from '../components/notifications-popover';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +34,8 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
 
   const layoutQuery: Breakpoint = 'lg';
 
-  return (
+  // @ts-ignore
+    return (
     <LayoutSection
       /** **************************************
        * Header
@@ -78,8 +75,6 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
             ),
             rightArea: (
               <Box gap={1} display="flex" alignItems="center">
-                <Searchbar />
-                <NotificationsPopover data={_notifications} />
                 <AccountPopover
                   data={[
                     {
@@ -89,12 +84,12 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
                     },
                     {
                       label: 'Profile',
-                      href: '#',
+                      href: '/users',
                       icon: <Iconify width={22} icon="solar:shield-keyhole-bold-duotone" />,
                     },
                     {
                       label: 'Settings',
-                      href: '#',
+                      href: '/settings',
                       icon: <Iconify width={22} icon="solar:settings-bold-duotone" />,
                     },
                   ]}
