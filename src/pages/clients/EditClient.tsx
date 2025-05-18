@@ -110,7 +110,7 @@ export function EditClient() {
         }
         <Box display="flex" alignItems="center" mb={5}>
             <Typography variant="h4" flexGrow={1}>
-                Edit User
+                Edit Client
             </Typography>
         </Box>
         {isLoad && <Card sx={{padding:1}}>
