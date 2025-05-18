@@ -1,4 +1,6 @@
 import {CalculatedType} from "./CalculatedType.ts";
+import {ContractType} from "./ContractType.ts";
+import {ClientType} from "./ClientType.ts";
 
 export interface ReportType {
     id: string,
@@ -12,6 +14,8 @@ export interface ReportType {
     activity: any,
     bonus: number,
     calculated: CalculatedType,
+    client: ClientType,
+    contract: ContractType,
     create_at: string,
     update_at: string
 }

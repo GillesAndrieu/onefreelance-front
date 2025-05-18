@@ -69,7 +69,7 @@ export function ReportTableRow({ row, selected, onSelectRow }: ReportTableRowPro
                 '-'
             )}</TableCell>
 
-        <TableCell>{row.calculated.total_tax_included} {getSymbolFromCurrency("GBP")}</TableCell>
+        <TableCell>{row.calculated.total_tax_included} {getSymbolFromCurrency(row.contract.currency_daily_rate)}</TableCell>
 
         <TableCell align="center">
           {row.create_at}
