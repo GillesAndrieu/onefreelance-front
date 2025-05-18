@@ -7,6 +7,7 @@ export interface ContractType {
     currency_daily_rate: string,
     tax_rate: string,
     tax_rate_type: string,
+    client_id: string,
     create_at: string,
     update_at: string
 }

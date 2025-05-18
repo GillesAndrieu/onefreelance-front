@@ -10,7 +10,7 @@ import SendIcon from '@mui/icons-material/Send';
 import {Form} from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import {ContractType} from "../../components/types/ContractType.ts";
-import {fetchCreateContract} from "../../components/api";
+import {fetchCreateContract, fetchGetClients} from "../../components/api";
 
 export function CreateContract() {
 
@@ -20,8 +20,21 @@ export function CreateContract() {
     const [currencyDailyRate, setCurrencyDailyRate] = useState<string>("");
     const [taxRate, setTaxRate] = useState<string>("");
     const [taxRateType, setTaxRateType] = useState<string>("");
+    const [clients, setClients] = useState<Map<string, string>>(new Map<string, string>());
+    const [clientId, setClientId] = useState<string>("");
+    const [isLoad, setIsLoad] = useState<boolean>(false);
     const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
     const [saveError, setSaveError] = useState<boolean>(false);
+
+    if(!isLoad) {
+        fetchGetClients()
+            .then(response => {
+                let initClients: Map<string, string> = new Map<string, string>();
+                response.map((client) => initClients.set(client.id, client.name));
+                setClients(initClients);
+                setIsLoad(true);
+            });
+    }
 
     const onSubmit = () => {
 
@@ -32,6 +45,7 @@ export function CreateContract() {
             currency_daily_rate: currencyDailyRate,
             tax_rate: taxRate,
             tax_rate_type: taxRateType,
+            client_id: clientId,
             id: "",
             create_at: "",
             update_at: ""
@@ -40,6 +54,7 @@ export function CreateContract() {
         fetchCreateContract(contract).then(() => {
             setSaveError(false);
             setSaveSuccess(true);
+            window.location.replace("/contracts");
         }).catch(() => {
             setSaveError(true);
             setSaveSuccess(false);
@@ -52,6 +67,10 @@ export function CreateContract() {
 
     const handleNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNumber(event.target.value);
+    };
+
+    const handleClientId = (event: SelectChangeEvent<string>) => {
+        setClientId(event.target.value);
     };
 
     const handleDailyRate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,6 +125,27 @@ export function CreateContract() {
                                 Contract data
                             </Typography>
                         </Box>
+                    </FormControl>
+                    <FormControl required fullWidth >
+                        <Box display="flex" alignItems="center" mb={1}>
+                            <InputLabel id="client-label">Client</InputLabel>
+                            <Select
+                                labelId="client-label"
+                                id="outlined-basic"
+                                value={clientId}
+                                label="Client"
+                                onChange={handleClientId}
+                                variant="outlined"
+                                fullWidth required
+                            >
+                                <MenuItem value={0} key={0}>&nbsp;</MenuItem>
+                                {[...clients.entries()].map(([key, value]) =>
+                                    <MenuItem value={key} key={key}>{value}</MenuItem>
+                                )}
+                            </Select>
+                        </Box>
+                    </FormControl>
+                    <FormControl required fullWidth >
                         <Box display="flex" alignItems="center" mb={1}>
                             <TextField id="outlined-basic" value={dailyRate} onChange={handleDailyRate} label="Daily rate" variant="outlined" fullWidth required />
                         </Box>
@@ -122,6 +162,7 @@ export function CreateContract() {
                             variant="outlined"
                             fullWidth required
                         >
+                            <MenuItem value={""}>&nbsp;</MenuItem>
                             <MenuItem value={"EUR"}>EUR</MenuItem>
                             <MenuItem value={"GBP"}>GBP</MenuItem>
                             <MenuItem value={"USD"}>USD</MenuItem>
@@ -145,7 +186,7 @@ export function CreateContract() {
                                 variant="outlined"
                                 fullWidth required
                             >
-                                <MenuItem value={"NONE"}>NONE</MenuItem>
+                                <MenuItem value={""}>&nbsp;</MenuItem>
                                 <MenuItem value={"CURRENCY"}>CURRENCY</MenuItem>
                                 <MenuItem value={"PERCENTAGE"}>PERCENTAGE</MenuItem>
                             </Select>
