@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import {useState} from "react";
 import SendIcon from '@mui/icons-material/Send';
 import {Form, useSearchParams} from "react-router-dom";
-import {fetchGetContract, fetchUpdateContract} from "../../components/api";
+import {fetchGetClients, fetchGetContract, fetchUpdateContract} from "../../components/api";
 import {ContractType} from "../../components/types/ContractType.ts";
 import Alert from "@mui/material/Alert";
 
@@ -21,15 +21,26 @@ export function EditContract() {
     const [currencyDailyRate, setCurrencyDailyRate] = useState<string>("");
     const [taxRate, setTaxRate] = useState<string>("");
     const [taxRateType, setTaxRateType] = useState<string>("");
+    const [clients, setClients] = useState<Map<string, string>>(new Map<string, string>());
+    const [clientId, setClientId] = useState<string>("");
     const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
     const [saveError, setSaveError] = useState<boolean>(false);
     const [isLoad, setIsLoad] = useState<boolean>(false);
     const id:any = searchParams.get("id");
 
     if(!isLoad) {
+        fetchGetClients()
+            .then(response => {
+                let initClients: Map<string, string> = new Map<string, string>();
+                response.map((client) => initClients.set(client.id, client.name));
+                setClients(initClients);
+                setIsLoad(true);
+            });
+
         fetchGetContract(id)
             .then(response => {
-                setContractId(response.id)
+                setContractId(response.id);
+                setClientId(response.client_id);
                 setName(response.name);
                 setNumber(response.number);
                 setDailyRate(response.daily_rate);
@@ -49,6 +60,7 @@ export function EditContract() {
             currency_daily_rate: currencyDailyRate,
             tax_rate: taxRate,
             tax_rate_type: taxRateType,
+            client_id: clientId,
             id: "",
             create_at: "",
             update_at: ""
@@ -69,6 +81,10 @@ export function EditContract() {
 
     const handleNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNumber(event.target.value);
+    };
+
+    const handleClientId = (event: SelectChangeEvent<string>) => {
+        setClientId(event.target.value);
     };
 
     const handleDailyRate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,6 +139,26 @@ export function EditContract() {
                                     Contract data
                                 </Typography>
                             </Box>
+                        </FormControl>
+                        <FormControl required fullWidth >
+                            <Box display="flex" alignItems="center" mb={1}>
+                                <InputLabel id="client-label">Client</InputLabel>
+                                <Select
+                                    labelId="client-label"
+                                    id="outlined-basic"
+                                    value={clientId}
+                                    label="Client"
+                                    onChange={handleClientId}
+                                    variant="outlined"
+                                    fullWidth required
+                                >
+                                    {[...clients.entries()].map(([key, value]) =>
+                                        <MenuItem value={key} key={key}>{value}</MenuItem>
+                                    )}
+                                </Select>
+                            </Box>
+                        </FormControl>
+                        <FormControl required fullWidth>
                             <Box display="flex" alignItems="center" mb={1}>
                                 <TextField id="outlined-basic" value={dailyRate} onChange={handleDailyRate} label="Daily rate" variant="outlined" fullWidth required />
                             </Box>
@@ -162,7 +198,6 @@ export function EditContract() {
                                     variant="outlined"
                                     fullWidth required
                                 >
-                                    <MenuItem value={"NONE"}>NONE</MenuItem>
                                     <MenuItem value={"CURRENCY"}>CURRENCY</MenuItem>
                                     <MenuItem value={"PERCENTAGE"}>PERCENTAGE</MenuItem>
                                 </Select>
