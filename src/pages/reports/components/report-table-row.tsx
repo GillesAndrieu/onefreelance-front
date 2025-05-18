@@ -13,7 +13,7 @@ import {Iconify} from '../../../components/iconify';
 import {useNavigate} from "react-router-dom";
 import getSymbolFromCurrency from 'currency-symbol-map'
 import {ReportType} from "../../../components/types/ReportType.ts";
-import {fetchDeleteReport} from "../../../components/api/ReportApi.tsx";
+import {fetchDeleteReport} from "../../../components/api";
 import {monthNames} from "./utils.ts";
 
 // ----------------------------------------------------------------------

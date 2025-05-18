@@ -62,12 +62,17 @@ export function FormCalendar(props: any) {
                 (<Box display="flex" alignItems="center" mb={1} key={key+"box"}>
                     {
                         value.map((day:any) => {
-                            if (day.currentMonth) {
+                            if (day.currentMonth && (day.date.getDay() === 0 || day.date.getDay() === 6)) {
+
+                                return (<><TextField id={day.number} defaultValue={0} value={props.activity.get(day.number)} inputProps={{pattern: "^(0|1|0\.5)$"}}
+                                                     type="text" key={day.number+"dayfield"} onChange={props.handleActivity}
+                                                     label={day.number} variant="outlined" fullWidth required sx={{ bgcolor: 'background.neutral' }} /></>)
+                            } else if (day.currentMonth) {
 
                                 return (<><TextField id={day.number} value={props.activity.get(day.number)} inputProps={{pattern: "^(0|1|0\.5)$"}}
                                                      type="text" key={day.number+"dayfield"} onChange={props.handleActivity}
                                                      label={day.number} variant="outlined" fullWidth required/></>)
-                            }else {
+                            } else {
                                 return (<TextField id={"outlined-number"+key} disabled value="" variant="outlined" key={day.number+"none"} sx={{
                                     width: '100%',
                                     '& .MuiOutlinedInput-notchedOutline': {
