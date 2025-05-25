@@ -8,6 +8,7 @@
 - [CI / CD](#ci--cd)
     - [Github Actions](#github-actions)
 - [Configuration and run](#configuration-and-run)
+- [Related project](#related-project)
 
 ## Functional promise
 
@@ -52,3 +53,7 @@ docker build -t onefreelance-front .
 ```shell
 docker run -p 80:80 onefreelance-front --env VITE_API_URL=<YOUR_API_URL> --env VITE_GOOGLE_CLIENT_ID=<YOUR_CLIENT_ID>
 ```
+
+## Related project
+
+Onefreelance-api : https://github.com/GillesAndrieu/onefreelance-api
