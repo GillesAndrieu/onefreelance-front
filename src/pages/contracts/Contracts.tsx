@@ -91,9 +91,9 @@ export function Contracts() {
                                 headLabel={[
                                     { id: 'name', label: 'Name' },
                                     { id: 'number', label: 'Number' },
-                                    { id: 'dailyRate', label: 'Daily rate' },
-                                    { id: 'taxRate', label: 'Tax rate' },
-                                    { id: 'createdAt', label: 'Created At', align: 'center' },
+                                    { id: 'daily_rate', label: 'Daily rate' },
+                                    { id: 'tax_rate', label: 'Tax rate' },
+                                    { id: 'create_at', label: 'Created At', align: 'center' },
                                     { id: '' },
                                 ]}
                             />
@@ -179,7 +179,8 @@ export function useTable() {
         setPage(0);
     }, []);
 
-    const onChangePage = useCallback((newPage: number) => {
+    // @ts-ignore
+    const onChangePage = useCallback((event: unknown, newPage: number) => {
         setPage(newPage);
     }, []);
 
