@@ -1,8 +1,11 @@
+import {useState} from "react";
+// MUI
 import {Grid2} from "@mui/material";
+// Components
 import {AnalyticsWidgetSummary} from "./analytics-widget-summary.tsx";
 import {AnalyticsCurrentVisits} from "./analytics-current-visits.tsx";
 import {AnalyticsWebsiteVisits} from "./analytics-website-visits.tsx";
-import {useState} from "react";
+// Api
 import {fetchGetReportsByYear} from "../../components/api";
 
 

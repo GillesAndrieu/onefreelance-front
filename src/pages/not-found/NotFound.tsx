@@ -1,10 +1,11 @@
+// MUI
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
+// Routes
 import {RouterLink} from '../../routes/components';
-
+// Layouts
 import {SimpleLayout} from '../../layouts/simple';
 
 export const NotFound = () => {

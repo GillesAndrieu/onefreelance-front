@@ -1,5 +1,6 @@
-import {DashboardContent} from "../../layouts/dashboard";
-
+import {useState} from "react";
+import {Form, useSearchParams} from "react-router-dom";
+// MUI
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -14,15 +15,18 @@ import {
     TextField
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import {useState} from "react";
 import SendIcon from '@mui/icons-material/Send';
-import {Form, useSearchParams} from "react-router-dom";
 import Alert from "@mui/material/Alert";
-import {ReportInputType} from "../../components/types/ReportInputType.ts";
-import {fetchGetContracts, fetchGetReport, fetchUpdateReport} from "../../components/api";
 import Checkbox from "@mui/material/Checkbox";
+// Layouts
+import {DashboardContent} from "../../layouts/dashboard";
+// Components
 import {monthNames} from "./components/utils.ts";
 import {FormEditCalendar} from "./FormEditCalendar.tsx";
+// Type
+import {ReportInputType} from "../../components/types/ReportInputType.ts";
+// Api
+import {fetchGetContracts, fetchGetReport, fetchUpdateReport} from "../../components/api";
 
 export function EditReport() {
 
@@ -51,7 +55,7 @@ export function EditReport() {
         fetchGetContracts()
             .then(response => {
                 let initContracts: Map<string, string> = new Map<string, string>();
-                response.map((contract) => initContracts.set(contract.id, contract.name));
+                response.forEach((contract) => initContracts.set(contract.id, contract.name));
                 setContracts(initContracts);
             });
 

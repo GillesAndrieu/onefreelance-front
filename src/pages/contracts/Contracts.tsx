@@ -1,5 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 
+// MUI
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
@@ -8,19 +9,20 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
+// Layouts
 import {DashboardContent} from '../../layouts/dashboard';
-
+// Components
 import {Iconify} from '../../components/iconify';
 import {Scrollbar} from '../../components/scrollbar';
-
 import {TableNoData} from './components/table-no-data';
 import {ContractTableRow} from './components/contract-table-row.tsx';
 import {ContractTableHead} from './components/contract-table-head.tsx';
 import {TableEmptyRows} from './components/table-empty-rows';
 import {ContractTableToolbar} from './components/contract-table-toolbar.tsx';
 import {applyFilter, emptyRows, getComparator} from './components/utils';
+// Type
 import {ContractType} from "../../components/types/ContractType.ts";
+// Api
 import {fetchGetContracts} from "../../components/api";
 
 // ----------------------------------------------------------------------
@@ -30,7 +32,6 @@ export function Contracts() {
     const table = useTable();
 
     const [filterName, setFilterName] = useState('');
-
 
     useEffect(() => {
         fetchGetContracts().then(json => {

@@ -1,5 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 
+// MUI
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
@@ -8,20 +9,20 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
+// Layouts
 import {DashboardContent} from '../../layouts/dashboard';
-
+// Components
 import {Iconify} from '../../components/iconify';
 import {Scrollbar} from '../../components/scrollbar';
-
 import {TableNoData} from './components/table-no-data';
 import {ReportTableRow} from './components/report-table-row.tsx';
 import {ReportTableHead} from './components/report-table-head.tsx';
 import {TableEmptyRows} from './components/table-empty-rows';
 import {ReportTableToolbar} from './components/report-table-toolbar.tsx';
 import {applyFilter, emptyRows, getComparator} from './components/utils';
-
-import {fetchGetReports} from "../../components/api/ReportApi.tsx";
+// Api
+import {fetchGetReports} from "../../components/api";
+// Type
 import {ReportType} from '../../components/types/ReportType.ts';
 
 // ----------------------------------------------------------------------

@@ -1,5 +1,6 @@
-import {DashboardContent} from "../../layouts/dashboard";
-
+import {useState} from "react";
+import {Form} from "react-router-dom";
+// MUI
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -14,15 +15,17 @@ import {
     TextField
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import {useState} from "react";
 import SendIcon from '@mui/icons-material/Send';
-import {Form} from "react-router-dom";
 import Alert from "@mui/material/Alert";
-import {ReportInputType} from "../../components/types/ReportInputType.ts";
-import {fetchCreateReport, fetchGetContracts} from "../../components/api";
 import Checkbox from "@mui/material/Checkbox";
+// Layouts
+import {DashboardContent} from "../../layouts/dashboard";
+// Components
+import {ReportInputType} from "../../components/types/ReportInputType.ts";
 import {monthNames} from "./components/utils.ts";
 import {FormCalendar} from "./FormCalendar.tsx";
+// Api
+import {fetchCreateReport, fetchGetContracts} from "../../components/api";
 
 export function CreateReport() {
 

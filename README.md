@@ -1,50 +1,54 @@
-# React + TypeScript + Vite
+# OneFreelance Front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-Currently, two official plugins are available:
+- [Functional promise](#functional-promise)
+- [CI / CD](#ci--cd)
+    - [Github Actions](#github-actions)
+- [Configuration and run](#configuration-and-run)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Functional promise
 
-## Expanding the ESLint configuration
+OneFreelance ambition is the ability for all customers to create and manage the company.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## CI / CD
 
-- Configure the top-level `parserOptions` property like this:
+### Github Actions
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+If you are not yet familiar with Github actions please start from [here](https://docs.github.com/en/actions).
+
+## Configuration and run
+
+- Set the environment variable : 
+```javascript
+// The api base url
+VITE_API_URL=
+// The google client id for authentication
+VITE_GOOGLE_CLIENT_ID=
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Run application on local
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```shell
+npm run dev
+```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+- Build production 
+
+```shell
+npm run build
+```
+
+- Build docker image
+
+```shell
+docker build -t onefreelance-front .
+```
+
+- Run docker 
+
+```shell
+docker run -p 80:80 onefreelance-front --env VITE_API_URL=<YOUR_API_URL> --env VITE_GOOGLE_CLIENT_ID=<YOUR_CLIENT_ID>
 ```
