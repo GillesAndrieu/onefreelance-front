@@ -93,7 +93,7 @@ export function Clients() {
                                     { id: 'name', label: 'Name' },
                                     { id: 'siret', label: 'Siret' },
                                     { id: 'referent', label: 'Referent' },
-                                    { id: 'createdAt', label: 'Created At', align: 'center' },
+                                    { id: 'create_at', label: 'Created At', align: 'center' },
                                     { id: '' },
                                 ]}
                             />
@@ -179,7 +179,8 @@ export function useTable() {
         setPage(0);
     }, []);
 
-    const onChangePage = useCallback((newPage: number) => {
+    // @ts-ignore
+    const onChangePage = useCallback((event: unknown, newPage: number) => {
         setPage(newPage);
     }, []);
 

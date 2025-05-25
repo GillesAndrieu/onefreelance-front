@@ -94,7 +94,7 @@ export function Users() {
                                     { id: 'email', label: 'Email' },
                                     { id: 'role', label: 'Role' },
                                     { id: 'status', label: 'Status' },
-                                    { id: 'createdAt', label: 'Created At', align: 'center' },
+                                    { id: 'create_at', label: 'Created At', align: 'center' },
                                     { id: '' },
                                 ]}
                             />
@@ -180,7 +180,8 @@ export function useTable() {
         setPage(0);
     }, []);
 
-    const onChangePage = useCallback((newPage: number) => {
+    // @ts-ignore
+    const onChangePage = useCallback((event: unknown, newPage: number) => {
         setPage(newPage);
     }, []);
 

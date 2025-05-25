@@ -90,11 +90,11 @@ export function Reports() {
                                     )
                                 }
                                 headLabel={[
-                                    { id: 'date', label: 'Date' },
-                                    { id: 'billedDate', label: 'Billed Date' },
+                                    { id: 'month', label: 'Date' },
+                                    { id: 'billed_month', label: 'Billed Date' },
                                     { id: 'billed', label: 'Billed' },
-                                    { id: 'total', label: 'Total' },
-                                    { id: 'createdAt', label: 'Created At', align: 'center' },
+                                    { id: 'total_tax_included', label: 'Total' },
+                                    { id: 'create_at', label: 'Created At', align: 'center' },
                                     { id: '' },
                                 ]}
                             />
@@ -129,7 +129,6 @@ export function Reports() {
                     page={table.page}
                     count={reports.length}
                     rowsPerPage={table.rowsPerPage}
-                    // @ts-ignore
                     onPageChange={table.onChangePage}
                     rowsPerPageOptions={[5, 10, 25]}
                     onRowsPerPageChange={table.onChangeRowsPerPage}
@@ -180,7 +179,8 @@ export function useTable() {
         setPage(0);
     }, []);
 
-    const onChangePage = useCallback((newPage: number) => {
+    // @ts-ignore
+    const onChangePage = useCallback((event: unknown, newPage: number) => {
         setPage(newPage);
     }, []);
 
