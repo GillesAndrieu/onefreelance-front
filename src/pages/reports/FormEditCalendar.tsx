@@ -1,7 +1,7 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import {weekDaysNames} from "./components/utils.ts";
 import {TextField} from "@mui/material";
+import {weekDaysNames} from "./components/utils.ts";
 
 export function FormEditCalendar(props: any) {
 

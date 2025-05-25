@@ -1,16 +1,20 @@
-import {DashboardContent} from "../../layouts/dashboard";
+import {useState} from "react";
+import {Form, useSearchParams} from "react-router-dom";
 
+// MUI
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import {CardContent, FormControl, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import {useState} from "react";
 import SendIcon from '@mui/icons-material/Send';
-import {Form, useSearchParams} from "react-router-dom";
-import {fetchGetClient, fetchUpdateClient} from "../../components/api";
-import {ClientType} from "../../components/types/ClientType.ts";
 import Alert from "@mui/material/Alert";
+// Layouts
+import {DashboardContent} from "../../layouts/dashboard";
+// Api
+import {fetchGetClient, fetchUpdateClient} from "../../components/api";
+// Type
+import {ClientType} from "../../components/types/ClientType.ts";
 import {AddressType} from "../../components/types/AddressType.ts";
 
 export function EditClient() {

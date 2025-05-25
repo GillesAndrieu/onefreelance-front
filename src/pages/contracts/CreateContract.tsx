@@ -1,15 +1,19 @@
-import {DashboardContent} from "../../layouts/dashboard";
+import {Form} from "react-router-dom";
+import {useState} from "react";
 
+// MUI
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import {CardContent, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import {useState} from "react";
 import SendIcon from '@mui/icons-material/Send';
-import {Form} from "react-router-dom";
 import Alert from "@mui/material/Alert";
+// Layouts
+import {DashboardContent} from "../../layouts/dashboard";
+// Type
 import {ContractType} from "../../components/types/ContractType.ts";
+// Api
 import {fetchCreateContract, fetchGetClients} from "../../components/api";
 
 export function CreateContract() {

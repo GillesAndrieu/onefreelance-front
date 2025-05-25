@@ -1,7 +1,10 @@
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography} from "@mui/material";
-import {DashboardContent} from "../../layouts/dashboard";
-import Box from "@mui/material/Box";
 import {useState} from "react";
+// MUI
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography} from "@mui/material";
+import Box from "@mui/material/Box";
+// Layouts
+import {DashboardContent} from "../../layouts/dashboard";
+// Components
 import {fetchGetYears} from "../../components/api";
 import {Dashboard} from "./Dashboard.tsx";
 

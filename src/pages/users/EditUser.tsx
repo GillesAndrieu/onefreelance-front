@@ -1,5 +1,7 @@
-import {DashboardContent} from "../../layouts/dashboard";
+import {Form, useSearchParams} from "react-router-dom";
+import {useState} from "react";
 
+// MUI
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -16,13 +18,15 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import {useState} from "react";
 import Checkbox from "@mui/material/Checkbox";
 import SendIcon from '@mui/icons-material/Send';
-import {Form, useSearchParams} from "react-router-dom";
-import {fetchGetUser, fetchUpdateUser} from "../../components/api";
-import {UserType} from "../../components/types/UserType.ts";
 import Alert from "@mui/material/Alert";
+// Layouts
+import {DashboardContent} from "../../layouts/dashboard";
+// Api
+import {fetchGetUser, fetchUpdateUser} from "../../components/api";
+// Type
+import {UserType} from "../../components/types/UserType.ts";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

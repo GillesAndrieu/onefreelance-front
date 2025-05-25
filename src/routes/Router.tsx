@@ -1,4 +1,6 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {Suspense} from "react";
+import {varAlpha} from "../theme/styles";
 
 import Box from '@mui/material/Box';
 import LinearProgress, {linearProgressClasses} from '@mui/material/LinearProgress';
@@ -17,8 +19,6 @@ import {CreateUser, EditUser, Users} from "../pages/users";
 import {Clients, CreateClient, EditClient} from "../pages/clients";
 import {Contracts, CreateContract, EditContract} from "../pages/contracts";
 import {CreateReport, EditReport, Reports} from "../pages/reports";
-import {Suspense} from "react";
-import {varAlpha} from "../theme/styles";
 
 export const Routes = () => {
     const { token } = useAuth();

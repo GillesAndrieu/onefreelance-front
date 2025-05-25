@@ -1,5 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 
+// MUI
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
@@ -8,20 +9,20 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
+// Layouts
 import {DashboardContent} from '../../layouts/dashboard';
-
+// Components
 import {Iconify} from '../../components/iconify';
 import {Scrollbar} from '../../components/scrollbar';
-
 import {TableNoData} from './components/table-no-data';
 import {UserTableRow} from './components/user-table-row';
 import {UserTableHead} from './components/user-table-head';
 import {TableEmptyRows} from './components/table-empty-rows';
 import {UserTableToolbar} from './components/user-table-toolbar';
 import {applyFilter, emptyRows, getComparator} from './components/utils';
-
+// Api
 import {fetchGetUsers} from "../../components/api";
+// Type
 import {UserType} from "../../components/types/UserType.ts";
 
 // ----------------------------------------------------------------------
